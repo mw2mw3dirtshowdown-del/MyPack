@@ -1,0 +1,151 @@
+# MyPack language file (English). Every value is a MiniMessage string: https://docs.advntr.dev/minimessage/format.html
+# <prefix> is replaced by the "prefix" entry below. Placeholders such as <name> are filled in by the plugin and are shown
+# literally (a player cannot inject tags through them). To translate: copy this file to lang/<code>.yml and set
+# "language: <code>" in config.yml. Missing keys fall back to this file.
+
+prefix: "<gradient:#7df9ff:#4169e1><bold>MyPack</bold></gradient> <dark_gray>»</dark_gray> "
+
+resourcepack:
+  prompt: "<gradient:#7df9ff:#4169e1>MyPack</gradient> <gray>needs its resource pack to show custom items, mobs and furniture."
+  failed: "<prefix><red>The resource pack could not be loaded. Rejoin to try again; if it keeps failing, tell an administrator."
+  declined: "<prefix><yellow>You declined the resource pack - custom items and models will not look right."
+  declined-required: "<prefix><red>This server requires its resource pack to play."
+
+command:
+  help:
+    - "<prefix><gray>MyPack commands:"
+    - " <aqua>/mypack list</aqua> <dark_gray>-</dark_gray> <gray>packs and their state"
+    - " <aqua>/mypack info <pack></aqua> <dark_gray>-</dark_gray> <gray>details of one pack"
+    - " <aqua>/mypack browse</aqua> <dark_gray>-</dark_gray> <gray>open the item / mob browser"
+    - " <aqua>/mypack give <player> <item> [amount]</aqua>"
+    - " <aqua>/mypack spawn <mob></aqua> <dark_gray>-</dark_gray> <gray>spawn a custom mob at your feet"
+    - " <aqua>/mypack loot roll <table> [times]</aqua> <dark_gray>-</dark_gray> <gray>test a loot table"
+    - " <aqua>/mypack install|uninstall|enable|disable <pack></aqua>"
+    - " <aqua>/mypack reload</aqua> <dark_gray>-</dark_gray> <gray>reload config, packs and the resource pack"
+    - " <aqua>/mypack validate [pack]</aqua> <dark_gray>-</dark_gray> <gray>list problems found in packs"
+    - " <aqua>/mypack resourcepack status|url|rebuild|push</aqua>"
+    - " <aqua>/mypack purge <namespace></aqua> <dark_gray>-</dark_gray> <gray>remove loaded mobs and furniture of a pack"
+    - " <aqua>/mypack debug</aqua> <dark_gray>-</dark_gray> <gray>runtime statistics"
+  no-player: "<prefix><red>No matching player is online."
+  player-only: "<prefix><red>This command can only be used by a player."
+  pack-not-found: "<prefix><red>No pack matches '<pack>'. Use <aqua>/mypack list</aqua> to see the available packs."
+  reload:
+    start: "<prefix><gray>Reloading configuration and packs..."
+    done: "<prefix><green>Reload complete: <white><packs></white> pack(s) loaded, <white><content></white> definitions, <white><problems></white> pack(s) not loaded."
+    failed: "<prefix><red>Reload failed: <error>"
+    restart-http: "<prefix><yellow>The resource pack HTTP settings changed - restart the server to apply them."
+    restart-database: "<prefix><yellow>The database settings changed - restart the server to apply them."
+    resourcepack-failed: "<prefix><red>The resource pack could not be built: <error>"
+  list:
+    empty: "<prefix><gray>No packs found. Put packs (folders or .zip / .mcpack / .mcaddon files) into <white><directory></white> and run <aqua>/mypack reload</aqua>."
+    header: "<prefix><gray>Packs (<white><count></white>):"
+    entry:
+      loaded: " <green>●</green> <white><name></white> <dark_gray>(<namespace> v<version>)</dark_gray>"
+      disabled: " <yellow>●</yellow> <white><name></white> <dark_gray>(<namespace>)</dark_gray> <yellow>disabled"
+      rejected: " <red>●</red> <white><name></white> <dark_gray>(<namespace>)</dark_gray> <red><detail>"
+      invalid: " <red>●</red> <white><source></white> <red><detail>"
+      missing: " <red>●</red> <white><source></white> <red><detail>"
+      not_installed: " <gold>●</gold> <white><source></white> <gold><detail>"
+  info:
+    header: "<prefix><gray>Pack <white><name></white>"
+    line: " <gray><key>: <white><value>"
+  validate:
+    error: " <red>ERROR</red> <dark_gray>[<pack>]</dark_gray> <white><file></white><gray>:</gray> <red><message>"
+    warn: " <yellow>WARN</yellow> <dark_gray>[<pack>]</dark_gray> <white><file></white><gray>:</gray> <yellow><message>"
+    clean: "<prefix><green>No problems found in <white><packs></white> pack(s)."
+    more: "<prefix><gray>... and <white><count></white> more. See the console for the full list."
+  install:
+    start: "<prefix><gray>Installing <white><file></white>..."
+    done: "<prefix><green>Installed <white><name></white> <dark_gray>(<detail>)</dark_gray>"
+    failed: "<prefix><red>Could not install <white><file></white>: <error>"
+    not-loaded: "<prefix><red><file> was found but not loaded: <detail>"
+  uninstall:
+    done: "<prefix><green>Uninstalled <white><pack></white>. The files were moved to plugins/MyPack/trash."
+    failed: "<prefix><red>Could not uninstall: <error>"
+  enable:
+    enabled: "<prefix><green>Enabled <white><pack></white>."
+    disabled: "<prefix><yellow>Disabled <white><pack></white>."
+    failed: "<prefix><red>Could not change the pack: <error>"
+  give:
+    done: "<prefix><green>Gave <white><amount>x <item></white> to <white><players></white> player(s)."
+    received: "<prefix><gray>You received <white><amount>x <item></white>."
+    unknown: "<prefix><red>'<item>' is not a known item. Use tab completion to see the available ids."
+  spawn:
+    done: "<prefix><green>Spawned <white><mob></white>."
+    failed: "<prefix><red>Could not spawn <white><mob></white> - see the console."
+    unknown: "<prefix><red>'<mob>' is not a known mob."
+  loot:
+    header: "<prefix><gray>Loot table <white><table></white> rolled <white><times></white> time(s):"
+    entry: " <gray>- <white><amount>x <item>"
+    nothing: " <gray>(nothing dropped)"
+    unknown: "<prefix><red>'<table>' is not a known loot table."
+  rp:
+    header: "<prefix><gray>Resource pack:"
+    enabled: " <gray>Enabled: <white><value>"
+    server: " <gray>HTTP server: <white><value>"
+    none: "<prefix><yellow>No resource pack has been built yet."
+    build: " <gray>Build: <white><files> files, <kib> KiB</white> <dark_gray>(sha1 <sha1>, <warnings> warnings)"
+    url: " <gray>URL: <white><url>"
+    clients: " <gray>Clients: <white><value>"
+    rebuilding: "<prefix><gray>Rebuilding the resource pack..."
+    rebuilt: "<prefix><green>Resource pack rebuilt <dark_gray>(sha1 <sha1>, changed: <changed>)"
+    rebuild-failed: "<prefix><red>Resource pack build failed: <error>"
+    pushed: "<prefix><green>Sent the resource pack to <white><players></white> player(s)."
+  purge:
+    done: "<prefix><green>Removed <white><mobs></white> mob(s) and <white><furniture></white> furniture piece(s) of <white><namespace></white>."
+  debug:
+    header: "<prefix><gray>MyPack runtime:"
+    line: " <gray><key>: <white><value>"
+
+furniture:
+  placed: "<prefix><green>Placed <white><id></white>."
+  picked-up: "<prefix><gray>Picked up."
+  no-permission: "<prefix><red>You may not place furniture."
+  cannot-place: "<prefix><red>You cannot place that here."
+  cannot-sit: "<prefix><yellow>You cannot sit here right now."
+  limit: "<prefix><red>This chunk already holds the maximum of <white><limit></white> furniture pieces."
+  not-yours: "<prefix><red>This furniture belongs to someone else."
+  disabled: "<prefix><red>Furniture is disabled on this server."
+
+gui:
+  no-permission: "<prefix><red>You do not have permission for that."
+  previous: "<yellow>Previous page"
+  next: "<yellow>Next page"
+  close: "<red>Close"
+  page: "<gray>Page <white><page></white>/<white><pages></white>"
+  main:
+    title: "<dark_gray>MyPack"
+    packs: "<aqua><bold>Packs"
+    packs-lore: "<gray><count> loaded"
+    items: "<gold><bold>Items & furniture"
+    items-lore: "<gray><count> definitions"
+    mobs: "<green><bold>Mobs"
+    mobs-lore: "<gray><count> definitions"
+  packs:
+    title: "<dark_gray>Packs"
+    name: "<yellow><name>"
+    state: "<gray>State: <white><state>"
+    namespace: "<gray>Namespace: <white><namespace>"
+    version: "<gray>Version: <white><version>"
+    counts: "<gray><items> items, <mobs> mobs, <furniture> furniture"
+    click: "<yellow>Click to browse its items"
+  items:
+    title: "<dark_gray>Items & furniture"
+    title-pack: "<dark_gray>Items - <namespace>"
+    id: "<dark_gray><id>"
+    click: "<yellow>Click: take 1 <dark_gray>|</dark_gray> Shift-click: take a stack"
+    given: "<prefix><gray>You took <white><amount>x <id></white>."
+  mobs:
+    title: "<dark_gray>Mobs"
+    title-pack: "<dark_gray>Mobs - <namespace>"
+    id: "<dark_gray><id>"
+    health: "<gray>Health: <white><health>"
+    model: "<gray>Model: <white><model>"
+    click: "<yellow>Click to spawn it at your feet"
+    spawned: "<prefix><green>Spawned <white><id></white>."
+    failed: "<prefix><red>Could not spawn <white><id></white>."
+  furniture:
+    title: "<dark_gray>Furniture"
+    rotate-left: "<yellow>Rotate left"
+    rotate-right: "<yellow>Rotate right"
+    pickup: "<green>Pick up"

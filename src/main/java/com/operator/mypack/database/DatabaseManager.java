@@ -61,6 +61,9 @@ public final class DatabaseManager implements AutoCloseable {
             hikari.setDriverClassName(selected.driverClass());
         }
         if (selected != Dialect.SQLITE) {
+            if (cfg.password().isEmpty()) {
+                log.warning("database.password is empty - set one in config.yml for your " + selected.name().toLowerCase() + " database.");
+            }
             hikari.setUsername(cfg.username());
             hikari.setPassword(cfg.password());
             hikari.setMaximumPoolSize(cfg.maxPoolSize());

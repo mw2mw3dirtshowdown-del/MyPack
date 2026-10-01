@@ -40,7 +40,7 @@ public final class FurnitureService implements ContentListener {
     private static final float DEFAULT_SIZE = 0.9F;
 
     /** A rider on one seat. */
-    private record Seat(UUID standId, UUID anchorId, int index, UUID playerId) {
+    private record Seat(UUID standId, ArmorStand stand, UUID anchorId, int index, UUID playerId) {
     }
 
     private final ContentRegistry registry;
@@ -342,7 +342,7 @@ public final class FurnitureService implements ContentListener {
             a.setInvulnerable(true);
             a.getPersistentDataContainer().set(seatKey, PersistentDataType.STRING, anchor.getUniqueId() + ":" + seatIndex);
         });
-        seats.put(stand.getUniqueId(), new Seat(stand.getUniqueId(), anchor.getUniqueId(), index, player.getUniqueId()));
+        seats.put(stand.getUniqueId(), new Seat(stand.getUniqueId(), stand, anchor.getUniqueId(), index, player.getUniqueId()));
         stand.addPassenger(player);
         return true;
     }
@@ -395,6 +395,13 @@ public final class FurnitureService implements ContentListener {
             }
         }
         flatVisuals.clear();
+        for (Seat seat : seats.values()) {
+            try {
+                seat.stand().remove();
+            } catch (RuntimeException ignored) {
+                // wrong thread during Folia shutdown; seat stands are not persistent
+            }
+        }
         seats.clear();
         tracked.clear();
         deferred.clear();

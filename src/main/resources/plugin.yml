@@ -1,0 +1,79 @@
+name: MyPack
+version: '${version}'
+main: com.operator.mypack.MyPack
+api-version: '1.21'
+folia-supported: true
+description: Bedrock-style content pack system for Paper servers
+authors: [MyPack contributors]
+website: https://github.com/mw2mw3dirtshowdown-del/MyPack
+load: POSTWORLD
+
+permissions:
+  mypack.*:
+    description: Every MyPack permission
+    default: op
+    children:
+      mypack.use: true
+      mypack.list: true
+      mypack.info: true
+      mypack.reload: true
+      mypack.install: true
+      mypack.give: true
+      mypack.spawn: true
+      mypack.loot: true
+      mypack.gui: true
+      mypack.validate: true
+      mypack.resourcepack: true
+      mypack.admin: true
+      mypack.debug: true
+      mypack.furniture.place: true
+      mypack.furniture.use: true
+      mypack.furniture.admin: true
+  mypack.use:
+    description: Use /mypack (help)
+    default: true
+  mypack.list:
+    description: /mypack list
+    default: op
+  mypack.info:
+    description: /mypack info
+    default: op
+  mypack.reload:
+    description: /mypack reload
+    default: op
+  mypack.install:
+    description: /mypack install, uninstall, enable and disable
+    default: op
+  mypack.give:
+    description: /mypack give and taking items from the browser
+    default: op
+  mypack.spawn:
+    description: /mypack spawn and spawning mobs from the browser
+    default: op
+  mypack.loot:
+    description: /mypack loot roll
+    default: op
+  mypack.gui:
+    description: /mypack browse
+    default: op
+  mypack.validate:
+    description: /mypack validate
+    default: op
+  mypack.resourcepack:
+    description: /mypack resourcepack
+    default: op
+  mypack.admin:
+    description: /mypack purge
+    default: op
+  mypack.debug:
+    description: /mypack debug
+    default: op
+  mypack.furniture.place:
+    description: Place furniture
+    default: true
+  mypack.furniture.use:
+    description: Sit on and use furniture
+    default: true
+  mypack.furniture.admin:
+    description: Rotate, pick up or remove furniture that belongs to other players
+    default: op

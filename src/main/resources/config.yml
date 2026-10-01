@@ -1,0 +1,100 @@
+# ============================================================================================================
+#  MyPack configuration
+#  /mypack reload re-reads this file, rescans the packs and rebuilds + re-sends the resource pack.
+#  The settings marked [restart] are only read at server start.
+# ============================================================================================================
+
+# Language file in plugins/MyPack/lang/<language>.yml (all player-facing text is MiniMessage).
+language: en
+
+# ------------------------------------------------------------------------------------------------------------
+#  Database [restart]
+#  Stores which packs are installed/enabled, an audit log, the resource pack status of every player and a ledger
+#  of spawned mobs / placed furniture. SQLite needs no setup. Paper bundles the SQLite and MySQL drivers; for
+#  PostgreSQL drop the driver jar into plugins/MyPack/lib/.
+# ------------------------------------------------------------------------------------------------------------
+database:
+  type: sqlite              # sqlite | mysql | postgresql
+  sqlite-file: mypack.db    # relative to plugins/MyPack/
+  host: 127.0.0.1           # mysql / postgresql only
+  port: 3306                # 5432 for PostgreSQL
+  name: mypack
+  username: mypack
+  password: ""              # set this for mysql / postgresql
+  use-ssl: false
+  table-prefix: mypack_     # letters, digits and '_' only (max 24)
+  pool:
+    max-size: 6
+    min-idle: 1
+    connection-timeout-ms: 10000
+    max-lifetime-ms: 1800000
+
+# ------------------------------------------------------------------------------------------------------------
+#  Packs
+# ------------------------------------------------------------------------------------------------------------
+packs:
+  # Folder (inside plugins/MyPack/) that holds the packs: folders or .zip / .mcpack / .mcaddon / .mypack files.
+  directory: packs
+  # Install every new pack found on start-up / reload. Off: install manually with /mypack install <file>.
+  auto-install: true
+  # Newly installed packs start enabled.
+  auto-enable: true
+  # Unlock the pack recipes in every player's recipe book when they join.
+  discover-recipes: true
+  # Limits applied to every archive (protects against zip bombs).
+  limits:
+    max-archive-mb: 256
+    max-extracted-mb: 512
+    max-entry-mb: 64
+    max-entries: 20000
+  security:
+    # Item actions may run console / player commands. A pack with commands can do anything a server operator can,
+    # so this stays off unless you trust every installed pack.
+    allow-commands: false
+
+# ------------------------------------------------------------------------------------------------------------
+#  Resource pack
+#  All packs are merged into ONE Java resource pack that is served by a small embedded web server and sent to
+#  players with Player#setResourcePack. server.properties is never touched.
+# ------------------------------------------------------------------------------------------------------------
+resource-pack:
+  enabled: true
+  push-on-join: true
+  push-delay-ticks: 20
+  # true: players must accept the pack (declining disconnects them). false: it is optional.
+  force: true
+  # pack.mcmeta values. 46 = Minecraft 1.21.4. Raise supported-formats.max for newer clients (see the Minecraft wiki
+  # "Pack format"); the plugin writes exactly these numbers.
+  pack-format: 46
+  supported-formats:
+    min: 34
+    max: 46
+  description: "MyPack content"
+  # Stable id so a rebuilt pack REPLACES the old one on the client. Leave empty for the default; set a different
+  # value per server when several MyPack servers share one proxy.
+  pack-id: ""
+  # Host the pack yourself (CDN / web server): set the full URL of the uploaded plugins/MyPack/cache/resourcepack.zip.
+  # When set, the embedded web server is not started.
+  external-url: ""
+  http:                       # [restart]
+    enabled: true
+    bind-address: 0.0.0.0
+    port: 8123                # open this TCP port in your firewall
+    # The address players use to reach this server (hostname or IP). REQUIRED for players outside your own network.
+    public-host: ""
+    public-scheme: http       # http | https (https only behind a reverse proxy that terminates TLS)
+    public-port: 0            # 0 = same as port; set when a proxy exposes another port
+
+# ------------------------------------------------------------------------------------------------------------
+#  3D models (custom mobs and furniture)
+# ------------------------------------------------------------------------------------------------------------
+models:
+  update-interval-ticks: 1    # 1 = smoothest animation, higher = fewer packets
+  view-range: 1.0             # multiplier of the display entities' view distance
+  hide-base-entity: true      # make the vanilla carrier of a modelled mob invisible
+  max-instances: 4000         # safety cap for models that exist at the same time
+
+furniture:
+  enabled: true
+  max-per-chunk: 64
+  interact-cooldown-ticks: 5

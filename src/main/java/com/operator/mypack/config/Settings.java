@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
  */
 public record Settings(
         String language,
-        boolean debug,
         Database database,
         Packs packs,
         ResourcePack resourcePack,
@@ -193,7 +192,7 @@ public record Settings(
                 clamp(f.getInt("max-per-chunk", 64), 1, 4096, "furniture.max-per-chunk", warn),
                 clamp(f.getInt("interact-cooldown-ticks", 5), 0, 200, "furniture.interact-cooldown-ticks", warn));
 
-        return new Settings(language, c.getBoolean("debug", false), database, packs, resourcePack, models, furniture);
+        return new Settings(language, database, packs, resourcePack, models, furniture);
     }
 
     // ------------------------------------------------------------------ helpers
