@@ -167,6 +167,12 @@ public final class ModelService implements ContentListener {
         instances.clear();
     }
 
+    /** Hitbox size of a model (used to size furniture anchors); {@code null} when the geometry is not loaded. */
+    public ModelBlueprint.Hitbox hitboxFor(String ownerId, ModelBinding binding) {
+        ModelBlueprint blueprint = blueprint(ownerId, binding);
+        return blueprint == null ? null : blueprint.hitbox(binding.scale());
+    }
+
     private ModelBlueprint blueprint(String ownerId, ModelBinding binding) {
         ModelBlueprint cached = blueprints.get(ownerId);
         if (cached != null) {
