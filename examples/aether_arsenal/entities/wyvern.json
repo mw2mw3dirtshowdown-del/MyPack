@@ -1,0 +1,54 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "aether:wyvern",
+      "is_spawnable": true
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "wyvern",
+          "monster"
+        ]
+      },
+      "minecraft:health": {
+        "value": 60
+      },
+      "minecraft:movement": {
+        "value": 0.26
+      },
+      "minecraft:attack": {
+        "damage": 7
+      },
+      "minecraft:follow_range": {
+        "value": 28
+      },
+      "minecraft:knockback_resistance": {
+        "value": 0.4
+      },
+      "minecraft:scale": {
+        "value": 1.5
+      },
+      "minecraft:loot": {
+        "table": "loot_tables/entities/wyvern.json"
+      },
+      "mypack:base_entity": "ZOMBIE",
+      "mypack:display_name": "<gradient:#2bd9a8:#2a7fb8>Sky Wyvern",
+      "mypack:name_visible": true,
+      "mypack:burns_in_daylight": false,
+      "mypack:model": {
+        "geometry": "geometry.wyvern",
+        "texture": "wyvern",
+        "y_offset": 0.0,
+        "animations": {
+          "idle": "animation.wyvern.idle",
+          "walk": "animation.wyvern.walk",
+          "attack": "animation.wyvern.attack",
+          "hurt": "animation.wyvern.hurt",
+          "death": "animation.wyvern.death"
+        }
+      }
+    }
+  }
+}

@@ -143,11 +143,12 @@ class BlueprintAndBakerTest {
         assertEquals(1.0f, b.maxY(), 1e-5f);
         assertEquals(-0.125f, b.minZ(), 1e-5f);
         ModelBlueprint.Hitbox h = bp.hitbox(1.0);
-        assertEquals(0.5f, h.width(), 1e-5f, "square footprint wide enough for any yaw");
+        float diameter = (float) (2.0 * Math.hypot(0.25, 0.125)); // circumscribed circle: covers the cube at every yaw
+        assertEquals(diameter, h.width(), 1e-4f, "square footprint wide enough for any yaw");
         assertEquals(1.0f, h.height(), 1e-5f);
         assertEquals(0.0f, h.offsetY(), 1e-5f);
         ModelBlueprint.Hitbox scaled = bp.hitbox(2.0);
-        assertEquals(1.0f, scaled.width(), 1e-5f);
+        assertEquals(2 * diameter, scaled.width(), 1e-4f);
         assertEquals(2.0f, scaled.height(), 1e-5f);
     }
 
@@ -172,5 +173,24 @@ class BlueprintAndBakerTest {
         ModelBlueprint.Hitbox h = ModelBlueprint.of(geo, "none").hitbox(1.0);
         assertEquals(0.6f, h.width(), 1e-5f);
         assertEquals(1.8f, h.height(), 1e-5f);
+    }
+
+    @Test
+    @DisplayName("a thin, long appendage must not inflate the hitbox (players could hit empty air otherwise)")
+    void appendagesDoNotInflateTheHitbox() {
+        GeometryModel body = geometry("""
+                {"minecraft:geometry": [{"description": {"identifier": "geometry.body"}, "bones": [
+                  {"name": "b", "cubes": [{"origin": [-8, 0, -8], "size": [16, 16, 16], "uv": [0, 0]}]}]}]}
+                """);
+        GeometryModel withTail = geometry("""
+                {"minecraft:geometry": [{"description": {"identifier": "geometry.tailed"}, "bones": [
+                  {"name": "b", "cubes": [{"origin": [-8, 0, -8], "size": [16, 16, 16], "uv": [0, 0]},
+                                          {"origin": [-0.5, 7, 8], "size": [1, 1, 40], "uv": [0, 0]}]}]}]}
+                """);
+        float plain = ModelBlueprint.of(body, "body").hitbox(1.0).width();
+        float tailed = ModelBlueprint.of(withTail, "tailed").hitbox(1.0).width();
+        assertEquals((float) (2.0 * Math.hypot(0.5, 0.5)), plain, 1e-4f);
+        assertTrue(tailed < plain * 1.4f, "a 2.5 block tail adds only a little: plain=" + plain + " tailed=" + tailed);
+        assertTrue(tailed > plain, "but it is not ignored completely");
     }
 }

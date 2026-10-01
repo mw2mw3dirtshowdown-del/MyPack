@@ -69,7 +69,6 @@ public final class PackService {
 
     private static final Pattern SAFE_SOURCE = Pattern.compile("[A-Za-z0-9 ._()\\-]{1,200}");
     private static final long SWAP_TIMEOUT_SECONDS = 60L;
-    private static final long BUILD_TIMEOUT_SECONDS = 180L;
 
     private final ConfigManager config;
     private final Schedulers schedulers;
@@ -351,7 +350,7 @@ public final class PackService {
         }
         scanner.pruneCache(keep);
 
-        ResourcePackService.BuildReport build = waitFor(resourcePack.rebuild(finalPacks, snapshot), BUILD_TIMEOUT_SECONDS, "resource pack build");
+        ResourcePackService.BuildReport build = resourcePack.rebuildNow(finalPacks, snapshot);
         audit(null, "reload", actor, finalPacks.size() + " pack(s) loaded");
 
         result.sort(java.util.Comparator.comparing((PackStatus s) -> s.source().toLowerCase(Locale.ROOT)));

@@ -1,0 +1,22 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "aether.blaster.fire": {
+      "category": "player",
+      "subtitle": "Aether Blaster fires",
+      "sounds": [
+        {
+          "name": "sounds/blaster/fire",
+          "volume": 0.9
+        }
+      ]
+    },
+    "aether.wyvern.roar": {
+      "category": "hostile",
+      "subtitle": "Wyvern roars",
+      "sounds": [
+        "sounds/wyvern/roar"
+      ]
+    }
+  }
+}

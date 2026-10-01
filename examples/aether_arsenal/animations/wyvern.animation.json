@@ -1,0 +1,328 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.wyvern.idle": {
+      "loop": true,
+      "animation_length": 3.0,
+      "bones": {
+        "body": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "1.5": [
+              0,
+              0.6,
+              0
+            ],
+            "3.0": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "wing_l": {
+          "rotation": [
+            0,
+            0,
+            "math.sin(query.anim_time * 120) * 8"
+          ]
+        },
+        "wing_r": {
+          "rotation": [
+            0,
+            0,
+            "-math.sin(query.anim_time * 120) * 8"
+          ]
+        },
+        "wing_tip_l": {
+          "rotation": [
+            0,
+            0,
+            "math.sin(query.anim_time * 120 - 40) * 10"
+          ]
+        },
+        "wing_tip_r": {
+          "rotation": [
+            0,
+            0,
+            "-math.sin(query.anim_time * 120 - 40) * 10"
+          ]
+        },
+        "head": {
+          "rotation": [
+            "math.sin(query.anim_time * 120 + 30) * 3",
+            0,
+            0
+          ]
+        },
+        "tail1": {
+          "rotation": [
+            0,
+            "math.sin(query.anim_time * 120) * 6",
+            0
+          ]
+        },
+        "tail2": {
+          "rotation": [
+            0,
+            "math.sin(query.anim_time * 120 - 40) * 8",
+            0
+          ]
+        },
+        "tail3": {
+          "rotation": [
+            0,
+            "math.sin(query.anim_time * 120 - 80) * 10",
+            0
+          ]
+        }
+      }
+    },
+    "animation.wyvern.walk": {
+      "loop": true,
+      "animation_length": 1.0,
+      "bones": {
+        "leg_l": {
+          "rotation": [
+            "math.sin(query.anim_time * 360) * 35",
+            0,
+            0
+          ]
+        },
+        "leg_r": {
+          "rotation": [
+            "-math.sin(query.anim_time * 360) * 35",
+            0,
+            0
+          ]
+        },
+        "body": {
+          "position": [
+            0,
+            "math.abs(math.sin(query.anim_time * 360)) * 0.8",
+            0
+          ]
+        },
+        "wing_l": {
+          "rotation": [
+            0,
+            0,
+            "math.sin(query.anim_time * 720) * 12"
+          ]
+        },
+        "wing_r": {
+          "rotation": [
+            0,
+            0,
+            "-math.sin(query.anim_time * 720) * 12"
+          ]
+        },
+        "tail1": {
+          "rotation": [
+            0,
+            "math.sin(query.anim_time * 360) * 9",
+            0
+          ]
+        },
+        "tail2": {
+          "rotation": [
+            0,
+            "math.sin(query.anim_time * 360 - 50) * 12",
+            0
+          ]
+        }
+      }
+    },
+    "animation.wyvern.attack": {
+      "animation_length": 0.6,
+      "bones": {
+        "neck": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.2": [
+              0,
+              0,
+              -3
+            ],
+            "0.6": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "head": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.15": [
+              -25,
+              0,
+              0
+            ],
+            "0.3": [
+              15,
+              0,
+              0
+            ],
+            "0.6": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "jaw": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.2": [
+              35,
+              0,
+              0
+            ],
+            "0.5": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.wyvern.hurt": {
+      "animation_length": 0.4,
+      "bones": {
+        "body": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.1": [
+              -12,
+              0,
+              0
+            ],
+            "0.4": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "head": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.1": [
+              18,
+              0,
+              0
+            ],
+            "0.4": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.wyvern.death": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 1.2,
+      "bones": {
+        "body": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "1.0": {
+              "post": [
+                0,
+                0,
+                90
+              ],
+              "lerp_mode": "catmullrom"
+            }
+          },
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "1.0": [
+              0,
+              -6,
+              0
+            ]
+          }
+        },
+        "wing_l": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.8": [
+              0,
+              0,
+              -60
+            ]
+          }
+        },
+        "wing_r": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.8": [
+              0,
+              0,
+              60
+            ]
+          }
+        },
+        "head": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "1.0": [
+              30,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    }
+  }
+}

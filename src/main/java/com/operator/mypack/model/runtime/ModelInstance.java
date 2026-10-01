@@ -61,6 +61,7 @@ public final class ModelInstance {
     private final Map<String, Animation> animations;
     private final Matrix4f root;
     private final ModelBlueprint.Hitbox hitboxSpec;
+    private final boolean folia;
 
     // --- state owned by the compute (async) side -------------------------------------------------------------
     private final PoseSet poses;
@@ -91,15 +92,17 @@ public final class ModelInstance {
 
     /**
      * @param hitboxOverride explicit hitbox from the definition, or {@code null} to derive it from the model bounds
+     * @param folia          {@code true} on Folia, where entities must be moved with {@code teleportAsync}
      */
     public ModelInstance(UUID anchorId, String ownerId, ModelBlueprint blueprint, ModelBinding binding,
-                         Map<String, Animation> animations, long bornTick, ModelBlueprint.Hitbox hitboxOverride) {
+                         Map<String, Animation> animations, long bornTick, ModelBlueprint.Hitbox hitboxOverride, boolean folia) {
         this.anchorId = anchorId;
         this.ownerId = ownerId;
         this.blueprint = blueprint;
         this.binding = binding;
         this.animations = animations;
         this.bornTick = bornTick;
+        this.folia = folia;
         this.root = new Matrix4f().translate(0.0F, (float) binding.yOffset(), 0.0F)
                 .scale((float) binding.scale());
         this.hitboxSpec = hitboxOverride != null ? hitboxOverride : blueprint.hitbox(binding.scale());
@@ -245,15 +248,27 @@ public final class ModelInstance {
             Location target = displayLocation(loc);
             for (ItemDisplay display : displays) {
                 if (display.isValid()) {
-                    display.teleportAsync(target);
+                    move(display, target);
                 }
             }
             if (hitbox != null && hitbox.isValid()) {
-                hitbox.teleportAsync(loc.clone().add(0.0D, hitboxSpec.offsetY(), 0.0D));
+                move(hitbox, loc.clone().add(0.0D, hitboxSpec.offsetY(), 0.0D));
             }
             remember(loc);
         }
         return new FrameInput(tick, speed, dead);
+    }
+
+    /**
+     * Moves a model entity to follow its anchor. Paper teleports immediately (no future, no extra tick of lag); Folia
+     * does not allow the synchronous call and needs {@code teleportAsync}.
+     */
+    private void move(Entity entity, Location target) {
+        if (folia) {
+            entity.teleportAsync(target);
+        } else {
+            entity.teleport(target);
+        }
     }
 
     /** {@code true} when this tick needs a compute pass (something moves or an animation is running). */

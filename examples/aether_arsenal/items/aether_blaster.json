@@ -1,0 +1,63 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "aether:aether_blaster",
+      "category": "equipment"
+    },
+    "components": {
+      "minecraft:display_name": "<gradient:#7df9ff:#4169e1><bold>Aether Blaster",
+      "minecraft:icon": "aether_blaster",
+      "minecraft:hand_equipped": true,
+      "minecraft:max_stack_size": 1,
+      "minecraft:durability": {
+        "max_durability": 300
+      },
+      "mypack:rarity": "epic",
+      "minecraft:glint": true,
+      "mypack:base_material": "IRON_SWORD",
+      "mypack:lore": [
+        "<gray>A relic of the sky smiths.",
+        "",
+        "<aqua>Right-click</aqua><gray>: fire a bolt of aether"
+      ],
+      "mypack:attributes": [
+        {
+          "attribute": "attack_damage",
+          "amount": 6.0,
+          "operation": "add_value",
+          "slot": "mainhand"
+        },
+        {
+          "attribute": "attack_speed",
+          "amount": -2.0,
+          "operation": "add_value",
+          "slot": "mainhand"
+        }
+      ],
+      "mypack:actions": {
+        "cooldown_ticks": 20,
+        "on_right_click": [
+          {
+            "type": "sound",
+            "sound": "aether:aether.blaster.fire",
+            "volume": 1.0,
+            "pitch": 1.0
+          },
+          {
+            "type": "damage_ray",
+            "range": 32,
+            "damage": 8,
+            "ray_size": 0.35,
+            "knockback": 0.8,
+            "trail_particle": "END_ROD"
+          },
+          {
+            "type": "durability",
+            "amount": 1
+          }
+        ]
+      }
+    }
+  }
+}

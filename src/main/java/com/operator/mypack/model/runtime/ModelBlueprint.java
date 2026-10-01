@@ -211,18 +211,43 @@ public final class ModelBlueprint {
     }
 
     /**
-     * Interaction entity that covers the rest-pose model. An Interaction does not rotate with the entity, so the
-     * footprint is a square wide enough for every yaw. The entity's position is the <em>bottom</em> centre of its box,
-     * hence {@code offsetY} is the model's lowest point.
+     * Interaction entity that covers the rest-pose model. An Interaction is axis aligned and does not turn with the mob,
+     * so its footprint is a square that must work for every yaw. Taking the farthest point of the model would let a thin
+     * tail or wing tip inflate the box until players could hit the mob by clicking empty air, so the radius is the
+     * <em>volume-weighted</em> mean of every cube's circumscribed horizontal radius: big body parts dominate, small
+     * appendages barely count. Set {@code mypack:hitbox} in the definition to override it.
+     *
+     * <p>The height spans the whole model. An entity's position is the <em>bottom</em> centre of its box, hence
+     * {@code offsetY} is the model's lowest point.</p>
      */
     public Hitbox hitbox(double modelScale) {
-        Bounds b = restBounds();
-        if (b == null) {
+        if (cubes.isEmpty()) {
             return new Hitbox(0.6F, 1.8F, 0.0F);
         }
-        float radius = Math.max(Math.max(Math.abs(b.minX()), Math.abs(b.maxX())), Math.max(Math.abs(b.minZ()), Math.abs(b.maxZ())));
-        float bottom = Math.min(0.0F, b.minY());
+        PoseSet rest = new PoseSet(bones.size());
+        Matrix4f[] cubeMatrices = newCubeMatrices();
+        solve(rest, new Matrix4f(), newBoneMatrices(), cubeMatrices);
+        double weightedRadius = 0.0D;
+        double totalVolume = 0.0D;
+        float minY = Float.MAX_VALUE;
+        float maxY = -Float.MAX_VALUE;
+        Vector3f corner = new Vector3f();
+        for (Matrix4f m : cubeMatrices) {
+            double volume = Math.abs(m.determinant());
+            double radius = 0.0D;
+            for (int c = 0; c < 8; c++) {
+                corner.set((c & 1) == 0 ? -0.5F : 0.5F, (c & 2) == 0 ? -0.5F : 0.5F, (c & 4) == 0 ? -0.5F : 0.5F);
+                m.transformPosition(corner);
+                radius = Math.max(radius, Math.hypot(corner.x, corner.z));
+                minY = Math.min(minY, corner.y);
+                maxY = Math.max(maxY, corner.y);
+            }
+            weightedRadius += volume * radius;
+            totalVolume += volume;
+        }
+        double radius = totalVolume > 0.0D ? weightedRadius / totalVolume : 0.3D;
+        float bottom = Math.min(0.0F, minY);
         float scale = (float) modelScale;
-        return new Hitbox(Math.max(0.1F, 2.0F * radius * scale), Math.max(0.1F, (b.maxY() - bottom) * scale), bottom * scale);
+        return new Hitbox(Math.max(0.1F, (float) (2.0D * radius) * scale), Math.max(0.1F, (maxY - bottom) * scale), bottom * scale);
     }
 }

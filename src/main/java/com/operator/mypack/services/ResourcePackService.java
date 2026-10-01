@@ -120,16 +120,23 @@ public final class ResourcePackService {
      * online player.
      */
     public CompletableFuture<BuildReport> rebuild(List<InstalledPack> packs, ContentRegistry.Snapshot snapshot) {
+        return schedulers.supplyAsync(() -> rebuildNow(packs, snapshot));
+    }
+
+    /**
+     * Blocking variant for callers that already run on an async thread (the pack sync). It deliberately does not hand
+     * the work to another async task: waiting for a second task on a small pool could deadlock.
+     */
+    public BuildReport rebuildNow(List<InstalledPack> packs, ContentRegistry.Snapshot snapshot) {
         Settings.ResourcePack rp = config.settings().resourcePack();
         if (!rp.enabled()) {
-            return CompletableFuture.completedFuture(new BuildReport(true, published.get(), false, null));
+            return new BuildReport(true, published.get(), false, null);
         }
-        return schedulers.supplyAsync(() -> build(packs, snapshot, rp)).thenApply(report -> {
-            if (report.success() && report.changed()) {
-                pushAll();
-            }
-            return report;
-        });
+        BuildReport report = build(packs, snapshot, rp);
+        if (report.success() && report.changed()) {
+            pushAll();
+        }
+        return report;
     }
 
     private BuildReport build(List<InstalledPack> packs, ContentRegistry.Snapshot snapshot, Settings.ResourcePack rp) {

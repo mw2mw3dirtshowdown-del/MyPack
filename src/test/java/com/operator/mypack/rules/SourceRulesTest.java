@@ -83,10 +83,15 @@ class SourceRulesTest {
     }
 
     @Test
-    @DisplayName("Folia safety: entities are never moved with the synchronous teleport")
-    void noSynchronousTeleport() throws IOException {
-        List<Line> offenders = matching("\\.teleport\\(");
-        assertTrue(offenders.isEmpty(), "use teleportAsync: " + offenders);
+    @DisplayName("Folia safety: the synchronous teleport exists only behind the Folia switch in ModelInstance")
+    void noUnguardedSynchronousTeleport() throws IOException {
+        List<Line> offenders = matching("\\.teleport\\(").stream()
+                .filter(l -> !l.file().toString().endsWith("ModelInstance.java")).toList();
+        assertTrue(offenders.isEmpty(), "use teleportAsync (or the guarded move() helper): " + offenders);
+        String source = Files.readString(Path.of("src/main/java/com/operator/mypack/model/runtime/ModelInstance.java"));
+        int sync = source.indexOf("entity.teleport(target)");
+        int guard = source.indexOf("if (folia)");
+        assertTrue(guard >= 0 && sync > guard, "entity.teleport(target) must sit in the else branch of 'if (folia)'");
     }
 
     @Test

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.0",
+  "mypack:furniture": {
+    "description": {
+      "identifier": "aether:throne"
+    },
+    "components": {
+      "minecraft:display_name": "<gold><bold>Sky Throne",
+      "minecraft:icon": "throne",
+      "mypack:lore": [
+        "<gray>Sneak + right-click for settings."
+      ],
+      "mypack:model": {
+        "geometry": "geometry.throne",
+        "texture": "throne"
+      },
+      "mypack:seats": [
+        {
+          "offset": [
+            0,
+            0.3,
+            0
+          ]
+        }
+      ],
+      "mypack:rotation_step": 45
+    }
+  }
+}

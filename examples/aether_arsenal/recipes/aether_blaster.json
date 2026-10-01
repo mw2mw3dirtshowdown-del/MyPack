@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "aether:aether_blaster"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  C",
+      " G ",
+      "S  "
+    ],
+    "key": {
+      "C": {
+        "item": "aether:core_shard"
+      },
+      "G": {
+        "item": "minecraft:gold_ingot"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "aether:aether_blaster",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "aether:core_shard"
+    },
+    "components": {
+      "minecraft:display_name": "<aqua>Core Shard",
+      "minecraft:icon": "core_shard",
+      "minecraft:glint": true,
+      "mypack:base_material": "AMETHYST_SHARD",
+      "mypack:rarity": "rare",
+      "mypack:lore": [
+        "<gray>Crystallised aether.",
+        "<dark_gray>Crafting material"
+      ]
+    }
+  }
+}

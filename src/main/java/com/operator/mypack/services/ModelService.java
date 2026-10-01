@@ -124,7 +124,7 @@ public final class ModelService implements ContentListener {
             }
         }
         ModelInstance instance = new ModelInstance(anchor.getUniqueId(), ownerId, blueprint, binding, animations, ticker.currentTick(),
-                hitboxOverride);
+                hitboxOverride, schedulers.isFolia());
         String namespace = ownerId.substring(0, ownerId.indexOf(':'));
         instance.spawn(origin, namespace, partKey, hitboxKey, config.settings().models().viewRange(), ownHitbox);
         instances.put(anchor.getUniqueId(), instance);

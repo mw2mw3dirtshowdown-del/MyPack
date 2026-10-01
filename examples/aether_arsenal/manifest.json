@@ -1,0 +1,46 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Aether Arsenal",
+    "description": "Example pack: a sky blaster, a 3D animated wyvern, furniture, recipes, loot and sounds.",
+    "uuid": "a1e7e5c4-3c5d-4d0e-8f4a-0a3b7c91d201",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      4
+    ]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "b2f8f6d5-4d6e-4e1f-9a5b-1b4c8da2e302",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "type": "resources",
+      "uuid": "c309a7e6-5e7f-4f20-8b6c-2c5d9eb3f403",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "metadata": {
+    "namespace": "aether",
+    "authors": [
+      "MyPack"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://github.com/mw2mw3dirtshowdown-del/MyPack"
+  }
+}

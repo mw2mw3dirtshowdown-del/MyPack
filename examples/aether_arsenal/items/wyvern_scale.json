@@ -1,0 +1,16 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "aether:wyvern_scale"
+    },
+    "components": {
+      "minecraft:display_name": "<green>Wyvern Scale",
+      "minecraft:icon": "wyvern_scale",
+      "mypack:base_material": "PHANTOM_MEMBRANE",
+      "mypack:lore": [
+        "<gray>Dropped by wyverns."
+      ]
+    }
+  }
+}
