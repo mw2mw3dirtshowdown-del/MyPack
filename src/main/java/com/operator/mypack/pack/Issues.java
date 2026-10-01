@@ -32,6 +32,10 @@ public final class Issues {
         issues.add(new Issue(Level.ERROR, file, message));
     }
 
+    public void addAll(java.util.Collection<Issue> other) {
+        issues.addAll(other);
+    }
+
     public List<Issue> all() {
         return Collections.unmodifiableList(issues);
     }

@@ -47,7 +47,8 @@ public record Settings(
     public record Limits(long maxArchiveBytes, long maxExtractedBytes, long maxEntryBytes, int maxEntries) {
     }
 
-    public record Packs(String directory, boolean autoInstall, boolean autoEnable, boolean allowCommands, Limits limits) {
+    public record Packs(String directory, boolean autoInstall, boolean autoEnable, boolean allowCommands,
+                        boolean discoverRecipes, Limits limits) {
     }
 
     public record Http(
@@ -69,6 +70,7 @@ public record Settings(
             int supportedMax,
             String description,
             String packId,
+            String externalUrl,
             Http http) {
     }
 
@@ -136,6 +138,7 @@ public record Settings(
                 p.getBoolean("auto-install", true),
                 p.getBoolean("auto-enable", true),
                 section(p, "security").getBoolean("allow-commands", false),
+                p.getBoolean("discover-recipes", true),
                 limits);
 
         // ---- resource pack --------------------------------------------------------------
@@ -173,6 +176,7 @@ public record Settings(
                 supportedMax,
                 nonBlank(r.getString("description"), "MyPack content"),
                 r.getString("pack-id", "").trim(),
+                r.getString("external-url", "").trim(),
                 http);
 
         // ---- models / furniture ---------------------------------------------------------
