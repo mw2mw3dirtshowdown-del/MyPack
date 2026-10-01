@@ -72,6 +72,11 @@ public record ItemDefinition(
         }
     }
 
+    /** {@code true} when the resource pack contains a model for this item (icon or hand-written model). */
+    public boolean hasCustomModel() {
+        return iconTexture != null || javaModel != null;
+    }
+
     /** Value of the {@code item_model} component; also the name of the generated item definition file. */
     public String modelKey() {
         return id.full();
