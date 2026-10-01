@@ -156,6 +156,8 @@ class ExamplePackEndToEndTest {
         // every cube of both models has a baked model + item definition under the documented key
         GeometryModel wyvern = registry.geometry("aether:geometry.wyvern");
         ModelBlueprint blueprint = ModelBlueprint.of(wyvern, "wyvern");
+        assertEquals(13, wyvern.bones().size(), "examples/README.md documents 13 bones");
+        assertEquals(18, wyvern.cubeCount(), "examples/README.md documents 18 cubes");
         assertEquals(wyvern.cubeCount(), blueprint.cubes().size());
         for (ModelBlueprint.CubeNode node : blueprint.cubes()) {
             JsonObject model = JsonUtils.parseObject(files.get("assets/aether/models/entity/" + node.path() + ".json"));

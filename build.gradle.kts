@@ -44,8 +44,9 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     // The dev bundle is compileOnly, so the API jar must be provided again for the test runtime classpath.
     testImplementation("io.papermc.paper:paper-api:$paperVersion")
-    // Drivers that Paper itself ships at runtime; tests need them explicitly.
-    testRuntimeOnly("org.xerial:sqlite-jdbc:3.46.0.0")
+    // Drivers that Paper itself ships at runtime; tests need them explicitly. sqlite-jdbc is a compile dependency of the
+    // tests because ExternalDriverLoaderTest refers to org.sqlite.JDBC directly.
+    testImplementation("org.xerial:sqlite-jdbc:3.46.0.0")
     testRuntimeOnly("org.slf4j:slf4j-nop:2.0.16")
 }
 
